@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Classification</title>
+    
+    <!-- You can use jQuery for AJAX or vanilla JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        // Asynchronously fetch and display email classification results
+        $(document).ready(function() {
+            // Display a loading message or spinner
+            $("#email-list").html('<li>Loading email classification results...</li>');
+
+            // Make AJAX request to the async classification endpoint
+            $.ajax({
+                url: '{% url "classify_emails_async" %}',
+                method: 'GET',
+                success: function(data) {
+                    // Clear the loading message
+                    $("#email-list").empty();
+                    
+                    const emails = data.emails;
+                    if (emails.length === 0) {
+                        $("#email-list").append('<li>No emails found.</li>');
+                    } else {
+                        // Loop through and display emails
+                        emails.forEach(email => {
+                            $("#email-list").append(`
+                                <li>
+                                    <strong>Subject:</strong> ${email.subject}<br>
+                                    <strong>From:</strong> ${email.sender}<br>
+                                    <strong>Classification:</strong> ${email.classification}<br>
+                                    <hr>
+                                </li>
+                            `);
+                        });
+                    }
+                },
+                error: function() {
+                    // Handle errors
+                    $("#email-list").html('<li>Error loading email classifications.</li>');
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Email Classification Results</h1>
+
+    <!-- Placeholder for classified emails -->
+    <ul id="email-list"></ul>
+
+</body>
+</html>

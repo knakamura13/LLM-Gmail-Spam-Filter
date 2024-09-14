@@ -1,0 +1,19 @@
+name: django-gpt-email-spam-filter
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - django
+  - djangorestframework
+  - google-auth
+  - google-auth-oauthlib
+  - google-auth-httplib2
+  - google-api-python-client
+  - openai
+  - sqlite
+  - pip
+  - pip:
+      - django-q
+      - python-decouple
+      - beautifulsoup4
